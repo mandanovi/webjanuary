@@ -1,7 +1,7 @@
 import openai
 import os
 from dotenv import load_dotenv
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, request, session
 from flask_bootstrap import Bootstrap
 
 
@@ -11,23 +11,27 @@ app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 Bootstrap(app)
 
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/', methods=['GET', 'POST'])
 def get_page():
     if request.method == 'POST':
         user_input = request.form['user_input']
+        session['user_question'] = user_input
         openai.api_key = os.environ.get("API_TOKEN")
-        response = openai.Completion.create(
-            model="text-davinci-003",
-            prompt=user_input,
-            max_tokens=2000,
-            temperature=0
-        )
-        result = response["choices"][0]["text"]
-        return render_template("index.html", ai_answer=result)
+        response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": session['user_question']},
+            {"role": "assistant", "content": session.get('assistant_answer', '')},
+            {"role": "user", "content": user_input}])
+        result = response["choices"][0]["message"]["content"]
+        session['assistant_answer'] = result
+        session.modified = True
+        new_result = result.split('\n')
+        return render_template("index.html", ai_answer=new_result)
+    session['assistant_answer'] = ''
     return render_template("index.html")
 
 
-@app.route('/imagecreator', methods=['GET','POST'])
+@app.route('/imagecreator', methods=['GET', 'POST'])
 def get_image():
     if request.method == 'POST':
         image_input = request.form['image_input']
@@ -44,6 +48,3 @@ def get_image():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
-

@@ -65,7 +65,7 @@
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
   --bs-body-color: #212529;
-  --bs-body-bg: #fff;
+  --bs-body-bg: #000000;
 }
 
 *,
@@ -158,7 +158,7 @@ h6, .h6 {
 
 p {
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 0
 }
 
 abbr[title],
@@ -1405,6 +1405,7 @@ progress {
     flex: 0 0 auto;
     width: 66.66666667%;
   }
+
 
   .col-lg-9 {
     flex: 0 0 auto;
@@ -7942,6 +7943,10 @@ textarea.form-control-lg {
   color: rgba(var(--bs-white-rgb), var(--bs-text-opacity)) !important;
 }
 
+.color-white {
+   color : white;
+}
+
 .text-body {
   --bs-text-opacity: 1;
   color: rgba(var(--bs-body-color-rgb), var(--bs-text-opacity)) !important;
@@ -11465,6 +11470,7 @@ textarea.form-control-lg {
   }
 }
 html {
+  min-height : 100%;
   scroll-padding-top: calc(4.5rem - 1px);
 }
 
@@ -11557,15 +11563,19 @@ body {
 }
 
 .masthead {
-  position: relative;
-  width: 100%;
-  height: 50%;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000 100%), url("../assets/img/owen.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
-  background-size: cover;
+    width: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000 100%), url("../assets/img/owen.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    margin: auto;
+    padding-bottom: 100px;
 }
+
 .masthead h1, .masthead .h1 {
   font-family: "Varela Round", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 2.5rem;
@@ -11693,9 +11703,6 @@ body {
   color: #fff;
 }
 
-.footer {
-  padding: 5rem 0;
-}
 
 .padding-custom {
   padding: 5rem 0;
@@ -11703,4 +11710,12 @@ body {
 
 .text-justify {
   text-align: justify;
+}
+
+footer {
+position: relative;
+bottom: 0;
+width: 100%;
+height: 30px; /* Or whatever the height of the footer is */
+padding-top: 100px;
 }
